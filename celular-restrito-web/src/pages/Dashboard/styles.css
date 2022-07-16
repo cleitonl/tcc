@@ -1,0 +1,13 @@
+.buttonTable {
+    background-color: white;
+    cursor:'pointer';
+    border:0;
+    border-radius: 50%;
+}
+.tabelaIcon {
+    text-align: center;
+}
+.buttonLink {
+ width: 100pt;
+ margin: 5px;
+}

@@ -1,0 +1,22 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "adm",
+        "logging": false,
+        "database": "celularrestrito",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "root",
+        "password": null,
+        "logging": false,
+        "database": "ragnar_db",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "production": {
+        "use_env_variable": "JAWSDB_URL",
+        "dialect": "postgres"
+    }
+}

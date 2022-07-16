@@ -1,0 +1,121 @@
+const { Aparelho } = require('../models');
+
+module.exports = {
+
+  // @desc    Retorna todos os aparelhos
+  // @route   GET /aparelho
+  // @access  Public
+  async getAparelhos(req, res, next) {
+    try {
+      const aparelhos = await Aparelho.findAll();
+
+      return res.status(200).json({
+        success: true,
+        count: aparelhos.length,
+        data: aparelhos
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
+    }
+  },
+
+  // @desc    Retorna o aparelho pelo Id
+  // @route   GET /aparelho:id
+  // @access  Public
+  async getAparelhoById(req, res, next) {
+    try {
+      const aparelho = await Aparelho.findOne({ where: req.params });
+
+      if (!aparelho) {
+        return res.status(404).json({
+          success: false,
+          error: "Aparelho não encontrado!"
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        data: aparelho
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
+    }
+  },
+
+  //@desc   Cria um aparelho
+  //@route  POST /aparelho
+  //@access Public
+  async createAparelho(req, res, next) {
+    try {
+      const aparelho = await Aparelho.create(req.body);
+
+      return res.status(201).json({
+        sucess: true,
+        data: aparelho
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server Error'
+      });
+    }
+  },
+
+  //@desc   Edita um aparelho
+  //@route  UPDATE /aparelho
+  //@access Public
+  async updateAparelho(req, res, next) {
+    try {
+      const aparelho = await Aparelho.findOne({ where: req.params });
+
+      if (!aparelho) {
+        return res.status(404).json({
+          success: false,
+          error: "Aparelho não encontrado!"
+        });
+      }
+
+      await Aparelho.update(req.body, { where: req.params });
+
+      return res.status(200).json({
+        sucess: true,
+        data: "aparelho atualizado"
+      });
+
+    } catch (err) {
+      return res.status(500).json({
+        sucess: false,
+        error: 'Server Error'
+      });
+    }
+  },
+
+
+  async deleteAparelho(req, res, next) {
+    try {
+      const aparelho = await Aparelho.findOne(req.params.id);
+
+      if (!aparelho) {
+        return res.status(404).json({
+          success: false,
+          error: 'Aparelho não Encontrado!'
+        })
+      }
+    } catch (err) {
+      
+    }
+    Aparelho.destroy({ where: req.params })
+      .then(result => res.sendStatus(204))
+      .catch((error) => {
+        res.status(412).json({ msg: error.message })
+      })
+  },
+
+}
